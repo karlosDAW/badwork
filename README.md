@@ -1,0 +1,2 @@
+#badwork
+bloqueador de paginas
