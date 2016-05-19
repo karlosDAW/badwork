@@ -2,29 +2,45 @@
 	<html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" type="text/css" href="blocked.css" />
-		<title>Blocked</title>
+		<title>Bloqueo</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/blocked.css">
 	</head>
 	<body>
-		<div id=logo>
-			<img src="" alt="badwork">
-		</div>
-		<div id="main">
-			<div>
-				<p class="error">Página bloqueada</p>
+		<header class="container">
+			<div class="row">
+				<figure class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-right"><img src="img/icon-64.png" alt="badwork"></figure>
+				<h2 id="mensaje-bloqueo" class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					Badwork bloqueo la siguiente página:
+					<span id="dominio">
+						WWW.MARCA.ES
+					</span>
+				</h2>
 			</div>
-			<div>
-				<img src="dudas.jpg" alt="dudas">
+		</header>
+		<section id="main" class="contianer">
+			<figure class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+				<img src="img/dudas.jpg" alt="¿Qué haces?" class="animacion">
+			</figure>
+		</section>
+		<footer class="container">
+			<div class="row">
+				<article id="frase-animo1" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
+					<p>
+						<i>"El trabajo que nunca se empieza es el que más tarda en finalizarse" J.R.R. TOLKIEN</i>
+					</p>
+				</article>
+				<article id="frase-animo2" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
+					<p>
+						<i>"Aunque todo falle, encontrarás que si trabajas con buen humor, las cosas se resolverán a tu favor" ANÓNIMO</i>
+					</p>
+				</article>
 			</div>
-			<div>
-				<p class="warning">¡¡¡Continua con tu trabajo!!!</p>
+			<div class="row">
+				<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+					<a href="">Configuración</a>
+				</article>
 			</div>
-			<div>
-				<p class="idea">"El trabajo que nunca se empieza es el que más tarda en finalizarse" J.R.R. TOLKIEN</p>
-			</div>
-			<div>
-				<p class="idea">"Aunque todo falle, encontrarás que si trabajas con buen humor, las cosas se resolverán a tu favor" ANÓNIMO</p>
-			</div>
-		</div>
+		</footer>
 	</body>
 </html>

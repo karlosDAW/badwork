@@ -1,4 +1,4 @@
-const self = require("sdk/self");
+const data = require("sdk/self").data;
 const toggleButtons = require('sdk/ui/button/toggle');
 const tabs = require("sdk/tabs");
 const panels = require("sdk/panel");
@@ -10,8 +10,7 @@ var lastDomain = '';
 var domain = '';
 // contructor del array de almacenamiento
 if(!ss.storage.pages) {
-	ss.storage.pages = [];
-	ss.storage.history = [];
+	ss.storage.pages = ['www.marca.es'];
 }
 
 // contructor del boton principal
@@ -19,29 +18,26 @@ var button = toggleButtons.ToggleButton({
 	id: "my-button",
 	label: "BadWork",
 	icon: {
-		"16": "./icon-16.png",
-		"32": "./icon-32.png",
-		"64": "./icon-64.png"
+		"16": "./img/icon-16.png",
+		"32": "./img/icon-32.png",
+		"64": "./img/icon-64.png"
 	},
 	onChange: handleChange
 });
 // contructor de la pagina de bloqueo
 pageMod.PageMod({
 	include: "*",
-	exclude:[self.data.url("blocked.html"),self.data.url("config.html")],
+	exclude:[data.url("blocked.html"),data.url("config.html")],
 	contentScriptWhen : "end",
-	attachTo: "top",
 	onAttach: function onAttach(worker){
-		console.log('atacando a la pagina con script');
+		console.log('atacando a la pagina');
 		lastDomain = worker.tab.url;
-		console.log(lastDomain);
-		if(ss.storage.pages.length > 0) {
-			console.log(ss.storage.pages);
+		if(ss.storage.pages.length > 0 || ss.storage.pages != null) {
 			domain = urls.URL(lastDomain).host;
 			for (var i = 0; i < ss.storage.pages.length; i++) {
 				var pag = ss.storage.pages[i];
 				if(domain == pag){
-					worker.tab.url = self.data.url("blocked.html");
+					worker.tab.url = data.url("blocked.html");
 				}
 			}
 		} else {
@@ -49,12 +45,22 @@ pageMod.PageMod({
 		}
 	}
 });
+pageMod.PageMod({
+	include: data.url("blocked.html"),
+	contentScriptWhen : "end",
+	contentScriptFile: [data.url("js/jquery.js"),data.url("js/bootstrap.min.js"),data.url("js/blocked.js")]
+});
+pageMod.PageMod({
+	include: data.url("config.html"),
+	contentScriptWhen : "end",
+	contentScriptFile: [data.url("js/jquery.js"),data.url("js/bootstrap.min.js"),data.url("js/config.js")]
+});
 // contructor del panel principal
 var panel = panels.Panel({
 	width: 350,
 	height: 220,
-	contentURL: self.data.url("panel.html"),
-	contentScriptFile: self.data.url("panel.js"),
+	contentURL: data.url("panel.html"),
+	contentScriptFile: data.url("js/panel.js"),
 	onHide: handleHide
 });
 // recogida del panel principal con mensaje blocked y almacenamiento de paginas bloqueadas
@@ -145,7 +151,7 @@ panel.port.on("unblocked", function() {
 
 // recogida del panel principal con el mensaje config
 panel.port.on("config", function() {
-	tabs.activeTab.url = self.data.url("conf.html");
+	tabs.activeTab.url = data.url("conf.html");
 });
 
 

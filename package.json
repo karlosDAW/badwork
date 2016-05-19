@@ -10,7 +10,5 @@
     "fennec": ">=38.0a1"
   },
   "license": "MIT",
-  "keywords": [
-    "jetpack"
-  ]
+  "permissions": {"multiprocess": true}
 }
