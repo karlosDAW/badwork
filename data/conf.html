@@ -6,7 +6,93 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/conf.css">
 </head>
-<body>
-	<h1>soy la pagina de configuracion</h1>
-</body>
+	<body>
+		<header class="container">
+			<div class="row">
+				<figure class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right"><img src="img/icon-64.png" alt="badwork"></figure>
+				<h2 class="col-xs-10 col-sm-10 col-md-10 col-lg-10 title text-center">
+					Badwork - Configuración
+				</h2>
+				<figure class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right"><img src="img/icon-64.png" alt="badwork"></figure>
+			</div>
+		</header>
+		<section id="main">
+			<div class="container" id="box-list">
+				<div class="container-fluid bloque">
+					<label for="" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-left label-pad">
+						<span class="label label-default">Lista negra:</span>
+					</label>
+					<ul class="list-group col-xs-12 col-sm-12 col-md-12 col-lg-12 container">
+						<li class="list-group-item">
+							<span class="pagina glyphicon glyphicon-globe"> <a href="http://www.marca.es"><i>WWW.MARCA.ES</i></a></span>
+							<button class="btn btn-danger fl-drch btn-lg"><span class="glyphicon glyphicon-trash"></span></button>
+						</li>
+						<li class="list-group-item">
+							<span class="pagina glyphicon glyphicon-globe"> <a href="http://www.marca.es"><i>WWW.ELMUNDO.ES</i></a></span>
+							<button class="btn btn-danger fl-drch btn-lg"><span class="glyphicon glyphicon-trash"></span></button>
+						</li>
+						<li class="list-group-item">
+							<span class="pagina glyphicon glyphicon-globe"> <a href="http://www.marca.es"><i>WWW.WIKIPEDIA.ES</i></a></span>
+							<button class="btn btn-danger fl-drch btn-lg"><span class="glyphicon glyphicon-trash"></span></button>
+						</li>
+						<li class="list-group-item">
+							<span class="pagina glyphicon glyphicon-globe"> <a href="http://www.marca.es"><i>WWW.AS.ES</i></a></span>
+							<button class="btn btn-danger fl-drch btn-lg"><span class="glyphicon glyphicon-trash"></span></button>
+						</li>
+						<li class="list-group-item">
+							<span class="pagina glyphicon glyphicon-globe"> <a href="http://www.marca.es"><i>WWW.FACEBOOK.ES</i></a></span>
+							<button class="btn btn-danger fl-drch btn-lg"><span class="glyphicon glyphicon-trash"></span></button>
+						</li>
+						<li class="list-group-item">
+							<span class="pagina glyphicon glyphicon-globe"> <a href="http://www.marca.es"><i>WWW.YOUTUBE.ES</i></a></span>
+							<button class="btn btn-danger fl-drch btn-lg"><span class="glyphicon glyphicon-trash"></span></button>
+						</li>
+					</ul>
+				</div>			
+			</div>
+			<div class="container" id="box-password">
+				<div class="container-fluid bloque">
+					<div class="form-group">
+						<label for="" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left label-pad">
+							<span class="label label-default">Contraseña:</span>
+						</label>
+						<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 text-left">
+							<input type="password" class="form-control input-lg" id="password" placeholder="Cambia tu Contraseña...">
+							
+						</div>
+						<button class="btn btn-primary btn-lg col-xs-12 col-sm-2 col-md-2 col-lg-2" id="btn-cambiar-password">
+							<span class="glyphicon glyphicon-refresh"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer>
+			<div class="container">
+				<div class="container-fluid bloque">
+					<label for="" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left label-pad">
+						<span class="label label-default">Conjunto de páginas para bloquear:</span>
+					</label>
+					<div>
+						<label for="" class="col-xs-8 col-sm-2 col-md-2 col-lg-2 vcenter">Redes Sociales:</label>
+						<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 text-left">
+							<button class="btn btn-danger btn-lg">bloquear</button>	
+						</div>
+					</div>
+					<div>
+						<label for="" class="col-xs-8 col-sm-2 col-md-2 col-lg-2 vcenter">Prensa:</label>
+						<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 text-left">
+							<button class="btn btn-danger btn-lg">bloquear</button>	
+						</div>
+					</div>
+					<div>
+						<label for="" class="col-xs-8 col-sm-2 col-md-2 col-lg-2 vcenter">Video Juegos:</label>
+						<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 text-left">
+							<button class="btn btn-danger btn-lg">bloquear</button>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
 </html>
