@@ -27,3 +27,6 @@ imgSetting.addEventListener('mouseover', function onmouseover(event){
 imgSetting.addEventListener('mouseout', function onmouseout(event){
 	event.target.src = 'img/setting-out.png';
 });
+self.port.on("load", function(url) {
+	self.port.emit("upload", url);
+});
