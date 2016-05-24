@@ -82,11 +82,6 @@ function checkedPage(tab){
 	return blocked;
 }
 
-// cargar pagina
-function reloadPage() {
-	tabs.activeTab.reload();
-	panel.hide();
-}
 /*
 =========================    MODULES     =========================================================================
 */
@@ -172,14 +167,18 @@ var panel = panels.Panel({
 panel.port.on("blocked", function() {
 	lastDomain = getCurrentUrl();
 	storagePageBlocked(lastDomain);
-	reloadPage();
+	//reloadPage();
 	// recargar pagina configuracion
 	for(let tab of tabs){
 		title = tab.title;
 		if(conf == title) {
 			tab.reload();
 		}
+		if(lastDomain == urls.URL(tab.url).host) {
+			tab.reload();
+		}
 	}
+	panel.hide();
 });
 
 // desbloqueo

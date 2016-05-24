@@ -7,7 +7,7 @@ self.port.on("storages", function(array){
 		    'class' : 'list-group-item',
 		});
 		var span = $('<span/>',{
-			html : "<i><a href=http://'"+array[i]+"' target='_blank'> " + array[i] + "</a></i>",
+			html : "<i><a href='http://"+array[i]+"'> " + array[i] + "</a></i>",
 		    'class' : 'pagina glyphicon glyphicon-globe'
 		});
 		var btn = $('<button/>', {

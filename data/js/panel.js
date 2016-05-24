@@ -9,7 +9,6 @@ btnBlocked.addEventListener('click', function onkeyup(event){
 	self.port.emit('blocked');
 },false);
 
-
 // boton que envia al index para desbloquear la url
 btnUnblocked.addEventListener('click', function onkeyup(event){
 	self.port.emit('unblocked');
@@ -27,6 +26,27 @@ imgSetting.addEventListener('mouseover', function onmouseover(event){
 imgSetting.addEventListener('mouseout', function onmouseout(event){
 	event.target.src = 'img/setting-out.png';
 });
+// actualizar url activa al usar el panel
 self.port.on("load", function(url) {
 	self.port.emit("upload", url);
+});
+// dependiendo del mensage desactivar botones
+self.port.on("message",function onLoad(json) {
+	data = JSON.parse(json);
+	console.log(data + "soy el mensage enviado por la pagina");
+	console.log(data.button + "soy el dato cogido en json");
+	switch(data.button) {
+	    case 1:
+	        btnBlocked.attr("disabled", true);
+	        break;
+	    case 2:
+	    	btnConf.attr("disabled", true);
+	    	btnBlocked.attr("disabled", true);
+	    	btnUnblocked.attr("disabled", true);
+	    	break;
+	    default:
+	    	btnConf.attr("disabled", false);
+	    	btnBlocked.attr("disabled", false);
+	    	btnUnblocked.attr("disabled", false);
+	}
 });
