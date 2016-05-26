@@ -1,25 +1,47 @@
+const {Cc,Ci} = require("chrome");
 const data = require("sdk/self").data;
 const toggleButtons = require('sdk/ui/button/toggle');
 const tabs = require("sdk/tabs");
 const panels = require("sdk/panel");
 const urls = require("sdk/url");
 const ss = require("sdk/simple-storage");
-const pageMod = require("sdk/page-mod"); 
+const pageMod = require("sdk/page-mod");
+
+const security = require("./lib/security"); 
 // variables
 var lastDomain = "";
 var title = "";
 var conf = "config";
-var passwordActive = false;
+var isActive = false;
 /*
 ==================        FUNCTIONS         ===========================================================
 */
+
 // mostrar y posicionar el panel principal
 function handleChange(state) {
 	if (state.checked) {
-		panel.show({
-			position: button 
-		});
-		lastDomain = getCurrentUrl();	
+		var check = security.statusPassword();
+
+		if(check == security.PASSWORD_ACTIVE || isActive == security.PASSWORD_ACTIVE) {
+			isActive = security.hasPassword();
+			panel.show({
+				position: button 
+			});
+			lastDomain = getCurrentUrl();
+			
+		} else {
+			
+			if(security.checkPassword()) {
+				isActive = true;
+				panel.show({
+					position: button 
+				});
+				lastDomain = getCurrentUrl();
+			} else {
+				isActive = false;
+				handleHide();		
+			}
+		}
 	}
 }
 
@@ -177,7 +199,7 @@ panel.port.on("blocked", function() {
 		if(lastDomain == urls.URL(tab.url).host) {
 			tab.reload();
 		}
-	}
+	}	
 	panel.hide();
 });
 
@@ -199,8 +221,8 @@ panel.port.on("unblocked", function() {
 				tab.reload();
 			}
 		}
-		panel.hide();		
 	}
+	panel.hide();
 });
 
 // configuracion
@@ -208,6 +230,3 @@ panel.port.on("config", function() {
 	tabs.activeTab.url = data.url("conf.html");
 	panel.hide();
 });
-
-
-
