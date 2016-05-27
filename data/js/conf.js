@@ -1,6 +1,6 @@
+
 // recibir el array con las paginas almacenadas
 self.port.on("storages", function(array){
-	console.log("se recibio el array");
 	contenedorLista = $("#lista");
 	for (var i = 1; i < array.length; i++) {
 		var li = $('<li/>', {
@@ -21,14 +21,17 @@ self.port.on("storages", function(array){
 		$("#" + i).click(function(event){
 			var index = $(this).attr("id")
 			self.port.emit("delete", index);
-			console.log("se pulso el boton "+index);
 		});
 	}
 });
 // enviar contraseña
-
-
-
+$("#btn-cambiar-password").click(function(event){
+	var newPassword = $("#password").val();
+	if(newPassword != "") {
+		window.alert("Contraseña cambiada");
+		self.port.emit("changePassword", newPassword);
+	}
+});
 
 // grupos de almacenaje
 $("footer").hide();

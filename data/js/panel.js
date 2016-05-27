@@ -30,23 +30,3 @@ imgSetting.addEventListener('mouseout', function onmouseout(event){
 self.port.on("load", function(url) {
 	self.port.emit("upload", url);
 });
-// dependiendo del mensage desactivar botones
-self.port.on("message",function onLoad(json) {
-	data = JSON.parse(json);
-	console.log(data + "soy el mensage enviado por la pagina");
-	console.log(data.button + "soy el dato cogido en json");
-	switch(data.button) {
-	    case 1:
-	        btnBlocked.attr("disabled", true);
-	        break;
-	    case 2:
-	    	btnConf.attr("disabled", true);
-	    	btnBlocked.attr("disabled", true);
-	    	btnUnblocked.attr("disabled", true);
-	    	break;
-	    default:
-	    	btnConf.attr("disabled", false);
-	    	btnBlocked.attr("disabled", false);
-	    	btnUnblocked.attr("disabled", false);
-	}
-});

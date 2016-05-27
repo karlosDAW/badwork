@@ -20,26 +20,26 @@ var isActive = false;
 // mostrar y posicionar el panel principal
 function handleChange(state) {
 	if (state.checked) {
-		var check = security.statusPassword();
+		var check = security.statusPassword();// Recien Creado o Activo
 
-		if(check == security.PASSWORD_ACTIVE || isActive == security.PASSWORD_ACTIVE) {
-			isActive = security.hasPassword();
+		if(isActive == security.PASSWORD_ACTIVE) { // Activo
+			isActive = security.hasPassword(); // verdadero
 			panel.show({
 				position: button 
 			});
 			lastDomain = getCurrentUrl();
 			
-		} else {
+		} else { // Creado
 			
-			if(security.checkPassword()) {
-				isActive = true;
+			if(security.checkPassword()) { // Checkeo correcto
+				isActive = security.hasPassword(); // verdadero
 				panel.show({
 					position: button 
 				});
 				lastDomain = getCurrentUrl();
-			} else {
+			} else { // incorrecto
 				isActive = false;
-				handleHide();		
+				handleHide();	
 			}
 		}
 	}
@@ -59,7 +59,6 @@ function getCurrentUrl(){
 	panel.port.on("upload", function(page){
 		url = page;
 	});
-	console.log(url);
 	return url;
 }
 
@@ -73,12 +72,10 @@ function storagePageBlocked(tab) {
 	for each (page in ss.storage.pages) {
 		if(page == tab) {
 			exist = true;
-			console.log('ya existe la pagina no se almacena');
 		}
 	}
 	if (!exist) {
 		ss.storage.pages.push(tab);
-		console.log('se ha almacenado una pagina nueva');
 	}
 	var newStorage = ss.storage.pages;
 	return newStorage;
@@ -103,7 +100,21 @@ function checkedPage(tab){
 	}
 	return blocked;
 }
+// recorrer paginas para recargar las desbloqueadas de la configuracion
+function reloadPageDelete(page) {
 
+	for (let tab of tabs) {
+		title = tab.title;
+		// redireccionar paginas para desbloquearlas
+		if(page == title) {
+			tab.url = "http://" + page;
+		}
+		// recargar pagina configuracion
+		if(conf == title) {
+			tab.reload();
+		}
+	}
+}
 /*
 =========================    MODULES     =========================================================================
 */
@@ -132,12 +143,8 @@ pageMod.PageMod({
 	attachTo :  [ "existing" ,  "top" ] ,
 	onAttach: function onAttach(worker) {
 		lastDomain = getCurrentUrl();
-		console.log('atacando a la pagina');
 		if(checkedPage(lastDomain)) {
 			worker.tab.url = data.url("blocked.html");
-			console.log("se ha bloqueado la pagina");
-		} else {
-			console.log("no se bloquea la pagina");
 		}
 	}
 });
@@ -149,7 +156,6 @@ pageMod.PageMod({
 	contentScriptFile: [data.url("js/jquery.js"),data.url("js/bootstrap.min.js"),data.url("js/blocked.js")],
 	onAttach: function onAttach(worker) {
 		worker.tab.title = lastDomain;
-		console.log("atacando a la pagina de bloqueo");
 		worker.port.emit("domainPage", worker.tab.title);
 	}
 });
@@ -161,14 +167,18 @@ pageMod.PageMod({
 	contentScriptFile: [data.url("js/jquery.js"),data.url("js/bootstrap.min.js"),data.url("js/conf.js")],
 	onAttach: function onAttach(worker) {
 		worker.tab.title = "config";
-		console.log("atacando a la pagina de configuracion");
 		worker.port.emit("storages", ss.storage.pages);
 		// revisar codigoooooo no devuelve lo deseado
 		worker.port.on("delete", function(index){
-			console.log(index);
+			var pageToDelete = ss.storage.pages[index];
 			ss.storage.pages.splice(index,1);
-			console.log(ss.storage.pages);
-			tabs.activeTab.reload();
+			reloadPageDelete(pageToDelete);
+		});
+		worker.port.on("changePassword", function(password){
+			var newPassword = security.passwordHash(password);
+			ss.storage.password = newPassword;
+			isActive = false;
+			worker.tab.close();
 		});
 	}
 });
@@ -208,7 +218,6 @@ panel.port.on("unblocked", function() {
 	lastDomain = getCurrentUrl();
 	if(lastDomain != "") {
 		deletePage(lastDomain);
-		console.log(lastDomain + " se ha borrado");
 		// recorrer todas las pestañas
 		for (let tab of tabs) {
 			title = tab.title;
