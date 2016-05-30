@@ -17,20 +17,17 @@ var isActive = false;
 ==================        FUNCTIONS         ===========================================================
 */
 
-// mostrar y posicionar el panel principal
+// manejar cambios en el estado del boton de la aplicacion
 function handleChange(state) {
 	if (state.checked) {
 		var check = security.statusPassword();// Recien Creado o Activo
-
 		if(isActive == security.PASSWORD_ACTIVE) { // Activo
 			isActive = security.hasPassword(); // verdadero
 			panel.show({
 				position: button 
 			});
 			lastDomain = getCurrentUrl();
-			
 		} else { // Creado
-			
 			if(security.checkPassword()) { // Checkeo correcto
 				isActive = security.hasPassword(); // verdadero
 				panel.show({
@@ -44,7 +41,6 @@ function handleChange(state) {
 		}
 	}
 }
-
 // dar la ultima url conocida
 function getCurrentUrl(){
 	if(tabs.activeTab.url == data.url("blocked.html")){
@@ -61,7 +57,6 @@ function getCurrentUrl(){
 	});
 	return url;
 }
-
 // ocultar el panel principal
 function handleHide() {
 	button.state('window', {checked: false});
@@ -80,7 +75,6 @@ function storagePageBlocked(tab) {
 	var newStorage = ss.storage.pages;
 	return newStorage;
 }
-
 // borrar pagina del almacen
 function deletePage(tab) {
 	for (var i = 0; i < ss.storage.pages.length; i++) {
@@ -89,7 +83,6 @@ function deletePage(tab) {
 		}
 	}
 }
-
 // checkear la pagina
 function checkedPage(tab){
 	var blocked = false;	
@@ -122,7 +115,6 @@ function reloadPageDelete(page) {
 if(!ss.storage.pages) {
 	ss.storage.pages = ['simple.wikipedia.org'];
 }
-
 // contructor del boton principal
 var button = toggleButtons.ToggleButton({
 	id: "my-button",
@@ -134,7 +126,6 @@ var button = toggleButtons.ToggleButton({
 	},
 	onChange: handleChange
 });
-
 // cualquier pagina
 pageMod.PageMod({
 	include: "*",
@@ -148,7 +139,6 @@ pageMod.PageMod({
 		}
 	}
 });
-
 // pagina de bloqueo
 pageMod.PageMod({
 	include: data.url("blocked.html"),
@@ -159,7 +149,6 @@ pageMod.PageMod({
 		worker.port.emit("domainPage", worker.tab.title);
 	}
 });
-
 // pagina de configuracion
 pageMod.PageMod({
 	include: data.url("conf.html"),
@@ -168,12 +157,13 @@ pageMod.PageMod({
 	onAttach: function onAttach(worker) {
 		worker.tab.title = "config";
 		worker.port.emit("storages", ss.storage.pages);
-		// revisar codigoooooo no devuelve lo deseado
+		// mensaje de borrado de lista
 		worker.port.on("delete", function(index){
 			var pageToDelete = ss.storage.pages[index];
 			ss.storage.pages.splice(index,1);
 			reloadPageDelete(pageToDelete);
 		});
+		// mensaje de cambio de contraseña
 		worker.port.on("changePassword", function(password){
 			var newPassword = security.passwordHash(password);
 			ss.storage.password = newPassword;
@@ -182,7 +172,6 @@ pageMod.PageMod({
 		});
 	}
 });
-
 // contructor del panel principal
 var panel = panels.Panel({
 	width: 350,
@@ -192,9 +181,8 @@ var panel = panels.Panel({
 	onHide: handleHide
 });
 /*
-==========================     MENSSAGES OF PANEL  =================================
+==========================    MENSAJES DEL PANEL      =======================================
 */
-
 // bloqueo
 panel.port.on("blocked", function() {
 	lastDomain = getCurrentUrl();
@@ -212,7 +200,6 @@ panel.port.on("blocked", function() {
 	}	
 	panel.hide();
 });
-
 // desbloqueo
 panel.port.on("unblocked", function() {
 	lastDomain = getCurrentUrl();
@@ -233,7 +220,6 @@ panel.port.on("unblocked", function() {
 	}
 	panel.hide();
 });
-
 // configuracion
 panel.port.on("config", function() {
 	tabs.activeTab.url = data.url("conf.html");
