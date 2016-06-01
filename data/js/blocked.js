@@ -1,13 +1,14 @@
 $("article").hide();
 var domain = $("#dominio");
-var arr = [1,2,3,4,5];
 var domainBlocked = "";
-var random = Math.floor(Math.random() * (arr.length - 0)) + 0;
-console.log(random);
-var articlesDisplay = [arr[random], arr[(random - 1)]];
-console.log(articlesDisplay);
-$("#frase-animo" + articlesDisplay[0]).show();
-$("#frase-animo" + articlesDisplay[1]).show();
+var p = $("p").length;
+var a = Math.floor((Math.random() * 5) + 1);
+var b = a - 1;
+if(b == 0) {
+	b = p;
+}
+$("#frase-animo" + a).show();
+$("#frase-animo" + b).show();
 self.port.on("domainPage", function(tab) {
 	domain.html(tab);
 	domainBlocked = domain.html();
