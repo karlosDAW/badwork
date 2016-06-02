@@ -1,7 +1,7 @@
 {
   "title": "badwork",
   "name": "badwork",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "bloqueador de paginas",
   "main": "index.js",
   "author": "Carlos Cañas",
